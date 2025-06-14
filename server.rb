@@ -1,16 +1,10 @@
 require 'socket'
 
-class WebServer
-  def tcp_request_response
-    server = TCPSocket.open('localhost', 80)
+server = TCPServer.new '127.0.0.1', 80
 
-    request = 'Hello World!'
-    server.puts(request)
-
-    server.gets
-    server.close
-  end
+loop do
+  client = server.accept
+  client.puts 'Hello world!'
+  client.puts "time is #{Time.now}"
+  client.close
 end
-
-webApp = WebServer.new
-webApp.tcp_request_response
